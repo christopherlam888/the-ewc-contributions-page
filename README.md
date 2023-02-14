@@ -1,7 +1,6 @@
 # The EWC Contributions Page
 
 Features to implement:
-- GitHub authentication for all users
 - Contributing instructions
 - Input validation
 - UI improvements
