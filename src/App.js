@@ -10,7 +10,8 @@ function App() {
   const [img, setImg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const accessToken = '';
+  const token = 'TsdcNfVKtMqz9fzjGfG9LMKCkg8nYG0cLXlW'
+  const accessToken = 'ghp_' + token;
   const owner = 'the-ewc-contributor';
   const repo = 'the-ewc-api';
   const branch = 'main';
