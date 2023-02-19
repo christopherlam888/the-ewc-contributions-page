@@ -10,7 +10,7 @@ function App() {
   const [img, setImg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const token = 'TsdcNfVKtMqz9fzjGfG9LMKCkg8nYG0cLXlW'
+  const token = 'TsdcNfVKtMqz9fzjGfG9LMKCkg8nYG0cLXlW';
   const accessToken = 'ghp_' + token;
   const owner = 'the-ewc-contributor';
   const repo = 'the-ewc-api';
@@ -25,13 +25,20 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!term || !definition || !category) {
+      alert('Please check your inputs.');
+      return;
+    }
+
     const newEntry = {
       term: term,
       definition: definition,
       category: category,
-      img: img,
+//      img: img,
+      img: ""
     };
-    console.log(newEntry)
+
     await fetch(url, {
       headers,
     })
@@ -102,15 +109,15 @@ function App() {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="term">Term</label>
-          <input type="text" name="term" value={term} onChange={(e) => setTerm(e.target.value)} />
+          <input type="text" name="term" value={term} onChange={(e) => setTerm(e.target.value)} required />
         </div>
         <div className="form-group">
           <label htmlFor="definition">Definition</label>
-          <textarea name="definition" value={definition} onChange={(e) => setDefinition(e.target.value)}></textarea>
+          <textarea name="definition" value={definition} onChange={(e) => setDefinition(e.target.value)} required></textarea>
         </div>
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select name="category" value={category} onChange={(e) => setCategory(e.target.value)} required>
             <option value="">-</option>
             <option value="brand">brand</option>
             <option value="general">general</option>
