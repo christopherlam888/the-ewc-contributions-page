@@ -31,6 +31,7 @@ function App() {
       category: category,
       img: img,
     };
+    console.log(newEntry)
     await fetch(url, {
       headers,
     })
@@ -108,8 +109,12 @@ function App() {
           <textarea name="definition" value={definition} onChange={(e) => setDefinition(e.target.value)}></textarea>
         </div>
         <div className="form-group">
-          <label htmlFor="Category">Category</label>
-          <input type="text" name="category" value={category} onChange={(e) => setCategory(e.target.value)} />
+          <label htmlFor="category">Category</label>
+          <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="">-</option>
+            <option value="brand">brand</option>
+            <option value="general">general</option>
+          </select>
         </div>
         <div className="form-group">
           <label htmlFor="img">img</label>
