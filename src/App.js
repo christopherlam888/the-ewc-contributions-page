@@ -10,19 +10,6 @@ function App() {
   const [img, setImg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const token = 'TsdcNfVKtMqz9fzjGfG9LMKCkg8nYG0cLXlW';
-  const accessToken = 'ghp_' + token;
-  const owner = 'the-ewc-contributor';
-  const repo = 'the-ewc-api';
-  const branch = 'main';
-  const message = 'Add entry';
-  const path = 'glossary.json';
-  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-
-  const headers = {
-    'Authorization': `Bearer ${accessToken}`,
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,61 +18,22 @@ function App() {
       return;
     }
 
-    const newEntry = {
+    const entry = {
       term: term,
       definition: definition,
       category: category,
-//      img: img,
+      //      img: img,
       img: ""
     };
 
-    await fetch(url, {
-      headers,
+    await fetch('http://localhost:5050/the-ewc/api/glossary/add/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(entry)
     })
-      .then(response => response.json())
-      .then(async data => {
-
-        const content = data.content;
-        const decodedContent = atob(content);
-        const entries = JSON.parse(decodedContent);
-
-        const sha = data.sha;
-
-        entries.push(newEntry);
-        entries.sort((a, b) => {
-          const termA = a.term.toLowerCase();
-          const termB = b.term.toLowerCase();
-          if (termA < termB) {
-            return -1;
-          }
-          if (termA > termB) {
-            return 1;
-          }
-          return 0;
-        });
-
-        const fileContent = JSON.stringify(entries);
-        const fileContentUint8Array = new TextEncoder().encode(fileContent);
-        const encodedContent = btoa(String.fromCharCode.apply(null, fileContentUint8Array));
-
-        const headers = {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        };
-
-        const body = JSON.stringify({
-          message,
-          content: encodedContent,
-          branch,
-          sha: sha,
-        });
-
-        const response = await fetch(url, {
-          method: 'PUT',
-          headers,
-          body,
-        });
-
+      .then(response => {
         if (response.ok) {
           console.log('Success!')
           setTerm('');
@@ -98,6 +46,7 @@ function App() {
           console.error('Error uploading file:', response.statusText);
         }
       })
+      .then(data => console.log(data))
       .catch(error => console.error(error));
   };
 
