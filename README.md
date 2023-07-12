@@ -8,6 +8,7 @@
 A web app for users to easily contribute new entries to The EWC app glossary. 
 
 ## Contributing
+- NOTE: Currently the contributions page can only be run alongside a local instance of the backend server with write permissions - Contributing is on hold until a new instance of the server with appropriate permissions is deployed
 - Please check the current glossary to make sure the term you would like to add hasn't already been added.
 - Follow proper capitalization and punctuation.
 - Leave the img field blank. Adding images to the glossary app is planned but not yet implemented.
